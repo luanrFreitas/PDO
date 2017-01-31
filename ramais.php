@@ -9,7 +9,7 @@ include "config.php";
     <title>PBXIP</title>
     <meta name="description" content="PBXIP" />
     <meta name="robots" content="index, follow" />
-    <meta name="author" content="Andrew Esteves"/>
+    <meta name="author" content="Luan Freitas"/>
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" />
     <!--[if lt IE 9]>
@@ -69,11 +69,14 @@ include "config.php";
         }
         # UPDATE
         if(isset($_POST['atualizar'])){
-            $id = (int)$_GET['id'];
-            $nome = $_POST['nome'];
-            $email = $_POST['email'];
-            $sqlUpdate = 'UPDATE pbxip_ramais SET nome = ?, email = ? WHERE id = ?';
-            $dados = array($nome, $email, $id);
+            $name  = $_POST['name'];
+            $context = $_POST['context'];
+            $secret = $_POST['secret'];
+            $host = $_POST['host'];
+            $type = $_POST['type'];
+            $call = $_POST['call'];
+            $sqlUpdate = "UPDATE pbxip_ramais SET name=?,context=?,secret=?,host=?,type=?,`call-limit`=? WHERE name = ?";
+            $dados = array($name, $context,$secret,$host,$type,$call, $name);
             try {
                 $update = $db->prepare($sqlUpdate);
                 if($update->execute($dados)){
@@ -117,11 +120,11 @@ include "config.php";
         <section class="jumbotron">
             <?php
             if(isset($_GET['action']) && $_GET['action'] == 'update'){
-                $id = (int)$_GET['id'];
-                $sqlSelect = 'SELECT * FROM pbxip_ramais WHERE id = :id';
+                $name = $_GET['name'];
+                $sqlSelect = 'SELECT * FROM pbxip_ramais WHERE name = :name';
                 try {
                     $select = $db->prepare($sqlSelect);
-                    $select->bindValue(':id', $id, PDO::PARAM_INT);
+                    $select->bindValue(':name', $name, PDO::PARAM_STR);
                     $select->execute();
                 } catch (PDOException $e) {
                     echo $e->getMessage();
@@ -129,19 +132,35 @@ include "config.php";
                 $result = $select->fetch(PDO::FETCH_OBJ);
                 ?>
 
-                <ul class="breadcrumb">
-                    <li><a href="index.php">Página inicial <span class="divider"> /</span> </a></li>
-                    <li class="active">Atualizar</li>
-                </ul>
+<!--                <ul class="breadcrumb">-->
+<!--                    <li><a href="index.php">Página inicial <span class="divider"> /</span> </a></li>-->
+<!--                    <li class="active">Atualizar</li>-->
+<!--                </ul>-->
 
                 <form method="post" action="">
                     <div class="input-prepend">
-                        <span class="add-on"><i class="icon-user"></i></span>
-                        <input type="text" name="nome" value="<?php echo $result->nome; ?>" placeholder="Nome:" />
+                        <span class="add-on"><i class="icon-ok"></i></span>
+                        <input type="text" name="name" value="<?php echo $result->name; ?>" placeholder="name:" />
                     </div>
                     <div class="input-prepend">
-                        <span class="add-on"><i class="icon-envelope"></i></span>
-                        <input type="text" name="email" value="<?php echo $result->email; ?>" placeholder="E-mail:" />
+                        <span class="add-on"><i class="icon-ok"></i></span>
+                        <input type="text" name="context" value="<?php echo $result->context; ?>" placeholder="context:" />
+                    </div>
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-ok"></i></span>
+                        <input type="text" name="secret" value="<?php echo $result->secret; ?>" placeholder="secret:" />
+                    </div>
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-ok"></i></span>
+                        <input type="text" name="host" value="<?php echo $result->host; ?>" placeholder="host:" />
+                    </div>
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-ok"></i></span>
+                        <input type="text" name="type" value="<?php echo $result->type; ?>" placeholder="type:" />
+                    </div>
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-ok"></i></span>
+                        <input type="text" name="call" value="<?php echo $result->call; ?>" placeholder="call-limit:" />
                     </div>
                     <br />
                     <input type="submit" name="atualizar" class="btn btn-primary" value="Atualizar dados">
@@ -195,8 +214,8 @@ include "config.php";
 
                 <tbody>
 
-                #SELECT
-                <?php
+                 <?php
+                 #SELECT
                 $sqlRead = "SELECT `name`,`context`,`secret`,`host`,`type`,`call-limit` as calllimit FROM pbxip_ramais";
                 try {
                     $read = $db->prepare($sqlRead);
@@ -215,8 +234,8 @@ include "config.php";
                         <td><?php echo $rs->calllimit; ?></td>
 
                         <td>
-                            <a href="index.php?action=update&id=<?php echo $rs->id; ?>" class="btn"><i class="icon-pencil"></i></a>
-                            <a href="index.php?action=delete&id=<?php echo $rs->id; ?>" class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></a>
+                            <a href="ramais.php?action=update&name=<?php echo $rs->name; ?>" class="btn"><i class="icon-pencil"></i></a>
+                            <a href="ramais.php?action=delete&name=<?php echo $rs->name; ?>" class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></a>
                         </td>
                     </tr>
                 <?php }	?>

@@ -208,8 +208,8 @@ include "config.php";
                         <td><?php echo $rs->email; ?></td>
 
                         <td>
-                            <a href="index.php?action=update&id=<?php echo $rs->id; ?>" class="btn"><i class="icon-pencil"></i></a>
-                            <a href="index.php?action=delete&id=<?php echo $rs->id; ?>" class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></a>
+                            <a href="usuarios.php?action=update&id=<?php echo $rs->id; ?>" class="btn"><i class="icon-pencil"></i></a>
+                            <a href="usuarios.php?action=delete&id=<?php echo $rs->id; ?>" class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></a>
                         </td>
                     </tr>
                 <?php }	?>
