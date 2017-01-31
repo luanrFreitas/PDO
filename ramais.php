@@ -194,6 +194,8 @@ include "config.php";
                 </thead>
 
                 <tbody>
+
+                #SELECT
                 <?php
                 $sqlRead = "SELECT `name`,`context`,`secret`,`host`,`type`,`call-limit` as calllimit FROM pbxip_ramais";
                 try {
