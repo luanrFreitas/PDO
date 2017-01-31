@@ -36,7 +36,7 @@ include "config.php";
             </div>
         </nav>
         <?php
-        # CREATE
+        # INSERT
         if(isset($_POST['enviar'])){
             $name  = $_POST['name'];
             $context = $_POST['context'];
@@ -94,11 +94,11 @@ include "config.php";
         }
         # DELETE
         if(isset($_GET['action']) && $_GET['action'] == 'delete'){
-            $id = (int)$_GET['id'];
-            $sqlDelete = 'DELETE FROM pbxip_ramais WHERE id = :id';
+            $name = (int)$_GET['name'];
+            $sqlDelete = 'DELETE FROM pbxip_ramais WHERE name = :name';
             try {
                 $delete = $db->prepare($sqlDelete);
-                $delete->bindValue(':id', $id, PDO::PARAM_INT);
+                $delete->bindValue(':name', $id, PDO::PARAM_STR);
                 if($delete->execute()){
                     echo "<div class='alert alert-success'>
 						<button type='button' class='close' data-dismiss='alert'>&times;</button>
@@ -194,7 +194,7 @@ include "config.php";
                         <input type="text" name="call" placeholder="call-limit:" />
                     </div>
                     <br />
-                    <input type="submit" name="enviar" class="btn btn-primary" value="Cadastrar dados">
+                    <input type="submit" name="enviar" class="btn btn-primary" value="Novo ramal">
                 </form>
 
             <?php } ?>
