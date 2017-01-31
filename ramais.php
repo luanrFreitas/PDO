@@ -37,36 +37,71 @@ include "config.php";
         </nav>
         <?php
         # INSERT
-        if(isset($_POST['enviar'])){
-            $name  = $_POST['name'];
-            $context = $_POST['context'];
-            $secret = $_POST['secret'];
-            $host = $_POST['host'];
-            $type = $_POST['type'];
-            $call = $_POST['call'];
-            $sql  = "INSERT INTO pbxip_ramais (name,context,secret,host,type,`call-limit`) ";
-            $sql .= 'VALUES (:name,:context,:secret,:host,:type,:call)';
-            try {
-                $create = $db->prepare($sql);
-                $create->bindValue(':name', $name, PDO::PARAM_STR);
-                $create->bindValue(':context', $context, PDO::PARAM_STR);
-                $create->bindValue(':secret', $secret, PDO::PARAM_STR);
-                $create->bindValue(':host', $host, PDO::PARAM_STR);
-                $create->bindValue(':type', $type, PDO::PARAM_STR);
-                $create->bindValue(':call', $call, PDO::PARAM_STR);
-                if($create->execute()){
-                    echo "<div class='alert alert-success'>
+        if(isset($_POST['novo'])){
+            ?>
+        <form method="post" action="">
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-ok"></i></span>
+                <input type="text" name="name" placeholder="name:" />
+            </div>
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-ok"></i></span>
+                <input type="text" name="context" placeholder="context:" />
+            </div>
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-ok"></i></span>
+                <input type="text" name="secret" placeholder="secret:" />
+            </div>
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-ok"></i></span>
+                <input type="text" name="host" placeholder="host:" />
+            </div>
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-ok"></i></span>
+                <input type="text" name="type" placeholder="type:" />
+            </div>
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-ok"></i></span>
+                <input type="text" name="call" placeholder="call-limit:" />
+            </div>
+            <br />
+            <input type="submit" name="enviar" class="btn btn-primary" value="Novo ramal">
+        </form>
+
+            <?php } ?>
+        
+            <?php
+            if (isset($_POST['enviar'])) {
+                $name = $_POST['name'];
+                $context = $_POST['context'];
+                $secret = $_POST['secret'];
+                $host = $_POST['host'];
+                $type = $_POST['type'];
+                $call = $_POST['call'];
+                $sql = "INSERT INTO pbxip_ramais (name,context,secret,host,type,`call-limit`) ";
+                $sql .= 'VALUES (:name,:context,:secret,:host,:type,:call)';
+                try {
+                    $create = $db->prepare($sql);
+                    $create->bindValue(':name', $name, PDO::PARAM_STR);
+                    $create->bindValue(':context', $context, PDO::PARAM_STR);
+                    $create->bindValue(':secret', $secret, PDO::PARAM_STR);
+                    $create->bindValue(':host', $host, PDO::PARAM_STR);
+                    $create->bindValue(':type', $type, PDO::PARAM_STR);
+                    $create->bindValue(':call', $call, PDO::PARAM_STR);
+                    if ($create->execute()) {
+                        echo "<div class='alert alert-success'>
 						<button type='button' class='close' data-dismiss='alert'>&times;</button>
 						<strong>Inserido com sucesso!</strong>
 						</div>";
-                }
-            } catch (PDOException $e) {
-                echo "<div class='alert alert-error'>
+                    }
+                } catch (PDOException $e) {
+                    echo "<div class='alert alert-error'>
 						<button type='button' class='close' data-dismiss='alert'>&times;</button>
 						<strong>Erro ao inserir dados!</strong>" . $e->getMessage() . "
 						</div>";
+                }
             }
-        }
+
         # UPDATE
         if(isset($_POST['atualizar'])){
             $name  = $_POST['name'];
@@ -169,32 +204,8 @@ include "config.php";
             <?php }else{ ?>
 
                 <form method="post" action="">
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-ok"></i></span>
-                        <input type="text" name="name" placeholder="name:" />
-                    </div>
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-ok"></i></span>
-                        <input type="text" name="context" placeholder="context:" />
-                    </div>
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-ok"></i></span>
-                        <input type="text" name="secret" placeholder="secret:" />
-                    </div>
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-ok"></i></span>
-                        <input type="text" name="host" placeholder="host:" />
-                    </div>
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-ok"></i></span>
-                        <input type="text" name="type" placeholder="type:" />
-                    </div>
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-ok"></i></span>
-                        <input type="text" name="call" placeholder="call-limit:" />
-                    </div>
                     <br />
-                    <input type="submit" name="enviar" class="btn btn-primary" value="Novo ramal">
+                    <input type="submit" name="novo" class="btn btn-primary" value="Novo ramal">
                 </form>
 
             <?php } ?>
