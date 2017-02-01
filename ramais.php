@@ -104,14 +104,15 @@ include "config.php";
 
         # UPDATE
         if(isset($_POST['atualizar'])){
+            $id  = $_POST['id'];
             $name  = $_POST['name'];
             $context = $_POST['context'];
             $secret = $_POST['secret'];
             $host = $_POST['host'];
             $type = $_POST['type'];
             $call = $_POST['call'];
-            $sqlUpdate = "UPDATE pbxip_ramais SET name=?,context=?,secret=?,host=?,type=?,`call-limit`=? WHERE name = ?";
-            $dados = array($name, $context,$secret,$host,$type,$call, $name);
+            $sqlUpdate = "UPDATE pbxip_ramais SET `name`=?,context=?,secret=?,host=?,type=?,`call-limit`=? WHERE id = ?";
+            $dados = array($name, $context,$secret,$host,$type,$call,$id);
             try {
                 $update = $db->prepare($sqlUpdate);
                 if($update->execute($dados)){
@@ -129,11 +130,11 @@ include "config.php";
         }
         # DELETE
         if(isset($_GET['action']) && $_GET['action'] == 'delete'){
-            $name = (int)$_GET['name'];
+            $id = (int)$_GET['id'];
             $sqlDelete = 'DELETE FROM pbxip_ramais WHERE name = :name';
             try {
                 $delete = $db->prepare($sqlDelete);
-                $delete->bindValue(':name', $id, PDO::PARAM_STR);
+                $delete->bindValue(':id', $id, PDO::PARAM_INT);
                 if($delete->execute()){
                     echo "<div class='alert alert-success'>
 						<button type='button' class='close' data-dismiss='alert'>&times;</button>
@@ -155,11 +156,11 @@ include "config.php";
         <section class="jumbotron">
             <?php
             if(isset($_GET['action']) && $_GET['action'] == 'update'){
-                $name = $_GET['name'];
-                $sqlSelect = 'SELECT * FROM pbxip_ramais WHERE name = :name';
+                $id = (int)$_GET['id'];
+                $sqlSelect = 'SELECT id,`name`,`context`,`secret`,`host`,`type`,`call-limit` as calllimit FROM pbxip_ramais WHERE id = :id';
                 try {
                     $select = $db->prepare($sqlSelect);
-                    $select->bindValue(':name', $name, PDO::PARAM_STR);
+                    $select->bindValue(':id', $id, PDO::PARAM_INT);
                     $select->execute();
                 } catch (PDOException $e) {
                     echo $e->getMessage();
@@ -195,8 +196,9 @@ include "config.php";
                     </div>
                     <div class="input-prepend">
                         <span class="add-on"><i class="icon-ok"></i></span>
-                        <input type="text" name="call" value="<?php echo $result->call; ?>" placeholder="call-limit:" />
+                        <input type="text" name="call" value="<?php echo $result->calllimit; ?>" placeholder="call-limit:" />
                     </div>
+                    <input type="hidden" name="id" value="<?php echo $result->id; ?>"/>
                     <br />
                     <input type="submit" name="atualizar" class="btn btn-primary" value="Atualizar dados">
                 </form>
@@ -214,6 +216,7 @@ include "config.php";
 
                 <thead>
                 <tr>
+
                     <th>Nome:</th>
                     <th>Contexto:</th>
                     <th>Senha:</th>
@@ -227,7 +230,7 @@ include "config.php";
 
                  <?php
                  #SELECT
-                $sqlRead = "SELECT `name`,`context`,`secret`,`host`,`type`,`call-limit` as calllimit FROM pbxip_ramais";
+                $sqlRead = "SELECT id,`name`,`context`,`secret`,`host`,`type`,`call-limit` as calllimit FROM pbxip_ramais";
                 try {
                     $read = $db->prepare($sqlRead);
                     $read->execute();
@@ -237,6 +240,7 @@ include "config.php";
                 while( $rs = $read->fetch(PDO::FETCH_OBJ) ){
                     ?>
                     <tr>
+
                         <td><?php echo $rs->name; ?></td>
                         <td><?php echo $rs->context; ?></td>
                         <td><?php echo $rs->secret; ?></td>
@@ -245,8 +249,8 @@ include "config.php";
                         <td><?php echo $rs->calllimit; ?></td>
 
                         <td>
-                            <a href="ramais.php?action=update&name=<?php echo $rs->name; ?>" class="btn"><i class="icon-pencil"></i></a>
-                            <a href="ramais.php?action=delete&name=<?php echo $rs->name; ?>" class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></a>
+                            <a href="ramais.php?action=update&id=<?php echo $rs->id; ?>" class="btn"><i class="icon-pencil"></i></a>
+                            <a href="ramais.php?action=delete&id=<?php echo $rs->id; ?>" class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></a>
                         </td>
                     </tr>
                 <?php }	?>
