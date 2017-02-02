@@ -42,7 +42,7 @@ include "config.php";
         <form method="post" action="">
             <div class="input-prepend">
                 <span class="add-on"><i class="icon-ok"></i></span>
-                <input type="text" name="name" placeholder="name:" />
+                <input type="text" name="name" placeholder="Ramal:" />
             </div>
             <div class="input-prepend">
                 <span class="add-on"><i class="icon-ok"></i></span>
@@ -65,7 +65,7 @@ include "config.php";
                 <input type="text" name="call" placeholder="call-limit:" />
             </div>
             <br />
-            <input type="submit" name="enviar" class="btn btn-primary" value="Novo ramal">
+            <input type="submit" name="enviar" class="btn btn-primary" value="Cadastrar ramal">
         </form>
 
             <?php } ?>

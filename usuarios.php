@@ -61,7 +61,7 @@ include "config.php";
                     <input type="text" name="email" placeholder="E-mail:" />
                 </div>
                 <br />
-                <input type="submit" name="enviar" class="btn btn-primary" value="Cadastrar dados">
+                <input type="submit" name="enviar" class="btn btn-primary" value="Cadastrar Usuário">
             </form>
 
         <?php } ?>
@@ -97,11 +97,15 @@ include "config.php";
         }
         # UPDATE
         if(isset($_POST['atualizar'])){
-            $id = (int)$_GET['id'];
+            $id_usuario = (int)$_GET['id_usuario'];
             $nome = $_POST['nome'];
+            $login = $_POST['login'];
+            $senha = $_POST['senha'];
+            $ativo = $_POST['ativo'];
             $email = $_POST['email'];
-            $sqlUpdate = 'UPDATE webpbxip_usuario SET nome = ?, email = ? WHERE id = ?';
-            $dados = array($nome, $email, $id);
+            $id_perfil = $_POST['perfil'];
+            $sqlUpdate = 'UPDATE webpbxip_usuario SET nome=?,login=?,senha=?,ativo=?,email=?,id_perfil=? WHERE id_usuario = ?';
+            $dados = array($nome,$login,$senha,$ativo,$email,$id_perfil,$id_usuario);
             try {
                 $update = $db->prepare($sqlUpdate);
                 if($update->execute($dados)){
@@ -119,11 +123,11 @@ include "config.php";
         }
         # DELETE
         if(isset($_GET['action']) && $_GET['action'] == 'delete'){
-            $id = (int)$_GET['id'];
-            $sqlDelete = 'DELETE FROM webpbxip_usuario WHERE id = :id';
+            $id_usuario = (int)$_GET['id_usuario'];
+            $sqlDelete = 'DELETE FROM webpbxip_usuario WHERE id_usuario = :id_usuario';
             try {
                 $delete = $db->prepare($sqlDelete);
-                $delete->bindValue(':id', $id, PDO::PARAM_INT);
+                $delete->bindValue(':id_usuario', $id_usuario, PDO::PARAM_INT);
                 if($delete->execute()){
                     echo "<div class='alert alert-success'>
 						<button type='button' class='close' data-dismiss='alert'>&times;</button>
@@ -145,11 +149,11 @@ include "config.php";
         <section class="jumbotron">
             <?php
             if(isset($_GET['action']) && $_GET['action'] == 'update'){
-                $id = (int)$_GET['id'];
-                $sqlSelect = 'SELECT * FROM webpbxip_usuario WHERE id = :id';
+                $id_usuario = (int)$_GET['id_usuario'];
+                $sqlSelect = 'SELECT `id_usuario`, `nome`, `login`, `senha`, `ativo`, `email`, `id_perfil` FROM webpbxip_usuario WHERE id_usuario = :id_usuario';
                 try {
                     $select = $db->prepare($sqlSelect);
-                    $select->bindValue(':id', $id, PDO::PARAM_INT);
+                    $select->bindValue(':id_usuario', $id_usuario, PDO::PARAM_INT);
                     $select->execute();
                 } catch (PDOException $e) {
                     echo $e->getMessage();
@@ -164,9 +168,26 @@ include "config.php";
                         <input type="text" name="nome" value="<?php echo $result->nome; ?>" placeholder="Nome:" />
                     </div>
                     <div class="input-prepend">
+                        <span class="add-on"><i class="icon-user"></i></span>
+                        <input type="text" name="login" value="<?php echo $result->login; ?>" placeholder="Login:" />
+                    </div>
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-user"></i></span>
+                        <input type="text" name="senha" value="<?php echo $result->senha; ?>" placeholder="Senha:" />
+                    </div>
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-user"></i></span>
+                        <input type="text" name="ativo" value="<?php echo $result->ativo; ?>" placeholder="Ativo:" />
+                    </div>
+                    <div class="input-prepend">
                         <span class="add-on"><i class="icon-envelope"></i></span>
                         <input type="text" name="email" value="<?php echo $result->email; ?>" placeholder="E-mail:" />
                     </div>
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-envelope"></i></span>
+                        <input type="text" name="perfil" value="<?php echo $result->id_perfil; ?>" placeholder="Perfil:" />
+                    </div>
+                    <input type="hidden" name="id_usuario" value="<?php echo $result->id_usuario; ?>"/>
                     <br />
                     <input type="submit" name="atualizar" class="btn btn-primary" value="Atualizar dados">
                 </form>
@@ -190,13 +211,15 @@ include "config.php";
                     <th>Senha:</th>
                     <th>Ativo:</th>
                     <th>E-mail:</th>
+                    <th>Perfil:</th>
                     <th>Ações:</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <?php
-                $sqlRead = 'SELECT * FROM webpbxip_usuario';
+                #SELECT
+                $sqlRead = 'SELECT id_usuario, `nome`, `login`, `senha`, `ativo`, `email`, `id_perfil` FROM `webpbxip_usuario';
                 try {
                     $read = $db->prepare($sqlRead);
                     $read->execute();
@@ -206,16 +229,17 @@ include "config.php";
                 while( $rs = $read->fetch(PDO::FETCH_OBJ) ){
                     ?>
                     <tr>
-                        <td><?php echo $rs->id; ?></td>
+                        <td><?php echo $rs->id_usuario; ?></td>
                         <td><?php echo $rs->nome; ?></td>
                         <td><?php echo $rs->login; ?></td>
                         <td><?php echo $rs->senha; ?></td>
                         <td><?php echo $rs->ativo; ?></td>
                         <td><?php echo $rs->email; ?></td>
+                        <td><?php echo $rs->id_perfil; ?></td>
 
                         <td>
-                            <a href="usuarios.php?action=update&id=<?php echo $rs->id; ?>" class="btn"><i class="icon-pencil"></i></a>
-                            <a href="usuarios.php?action=delete&id=<?php echo $rs->id; ?>" class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></a>
+                            <a href="usuarios.php?action=update&id_usuario=<?php echo $rs->id_usuario; ?>" class="btn"><i class="icon-pencil"></i></a>
+                            <a href="usuarios.php?action=delete&id_usuario=<?php echo $rs->id_usuario; ?>" class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></a>
                         </td>
                     </tr>
                 <?php }	?>
