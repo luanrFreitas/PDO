@@ -9,7 +9,7 @@ include "config.php";
     <title>PBXIP</title>
     <meta name="description" content="PBXIP" />
     <meta name="robots" content="index, follow" />
-    <meta name="author" content="Andrew Esteves"/>
+    <meta name="author" content="Luan Freitas"/>
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" />
     <!--[if lt IE 9]>
@@ -26,9 +26,9 @@ include "config.php";
             <div class="navbar-inner">
                 <div class="container">
                     <ul class="nav">
-                        <li class="active"><a href="index.php">Página inicial</a></li>
+                        <li><a href="index.php">Página inicial</a></li>
                         <li><a href="ramais.php">Ramais</a></li>
-                        <li><a href="usuarios.php">Usuarios</a></li>
+                        <li class="active"><a href="usuarios.php">Usuarios</a></li>
                         <li><a href="/astcdr">Relatórios</a></li>
                         <li><a href="">Sair</a></li>
                     </ul>
@@ -36,7 +36,37 @@ include "config.php";
             </div>
         </nav>
         <?php
-        # CREATE
+        # INSERT
+        if(isset($_POST['novo'])){
+            ?>
+            <form method="post" action="">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-user"></i></span>
+                    <input type="text" name="nome" placeholder="Nome:" />
+                </div>
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-tags"></i></span>
+                    <input type="text" name="login" placeholder="Login:" />
+                </div>
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-asterisk"></i></span>
+                    <input type="text" name="senha" placeholder="Senha:" />
+                </div>
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-ok"></i></span>
+                    <input type="text" name="ativo" placeholder="Ativo:" />
+                </div>
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-envelope"></i></span>
+                    <input type="text" name="email" placeholder="E-mail:" />
+                </div>
+                <br />
+                <input type="submit" name="enviar" class="btn btn-primary" value="Cadastrar dados">
+            </form>
+
+        <?php } ?>
+
+             <?php
         if(isset($_POST['enviar'])){
             $nome  = $_POST['nome'];
             $login = $_POST['login'];
@@ -127,10 +157,6 @@ include "config.php";
                 $result = $select->fetch(PDO::FETCH_OBJ);
                 ?>
 
-                <ul class="breadcrumb">
-                    <li><a href="index.php">Página inicial <span class="divider"> /</span> </a></li>
-                    <li class="active">Atualizar</li>
-                </ul>
 
                 <form method="post" action="">
                     <div class="input-prepend">
@@ -148,28 +174,8 @@ include "config.php";
             <?php }else{ ?>
 
                 <form method="post" action="">
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-user"></i></span>
-                        <input type="text" name="nome" placeholder="Nome:" />
-                    </div>
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-tags"></i></span>
-                        <input type="text" name="login" placeholder="Login:" />
-                    </div>
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-asterisk"></i></span>
-                        <input type="text" name="senha" placeholder="Senha:" />
-                    </div>
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-ok"></i></span>
-                        <input type="text" name="ativo" placeholder="Ativo:" />
-                    </div>
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-envelope"></i></span>
-                        <input type="text" name="email" placeholder="E-mail:" />
-                    </div>
                     <br />
-                    <input type="submit" name="enviar" class="btn btn-primary" value="Cadastrar dados">
+                    <input type="submit" name="novo" class="btn btn-primary" value="Novo Usuário">
                 </form>
 
             <?php } ?>

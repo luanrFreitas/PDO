@@ -26,8 +26,8 @@ include "config.php";
             <div class="navbar-inner">
                 <div class="container">
                     <ul class="nav">
-                        <li class="active"><a href="index.php">Página inicial</a></li>
-                        <li><a href="ramais.php">Ramais</a></li>
+                        <li><a href="index.php">Página inicial</a></li>
+                        <li class="active"><a href="ramais.php">Ramais</a></li>
                         <li><a href="usuarios.php">Usuarios</a></li>
                         <li><a href="/astcdr">Relatórios</a></li>
                         <li><a href="">Sair</a></li>
@@ -131,7 +131,7 @@ include "config.php";
         # DELETE
         if(isset($_GET['action']) && $_GET['action'] == 'delete'){
             $id = (int)$_GET['id'];
-            $sqlDelete = 'DELETE FROM pbxip_ramais WHERE name = :name';
+            $sqlDelete = 'DELETE FROM pbxip_ramais WHERE id = :id';
             try {
                 $delete = $db->prepare($sqlDelete);
                 $delete->bindValue(':id', $id, PDO::PARAM_INT);
@@ -176,7 +176,7 @@ include "config.php";
                 <form method="post" action="">
                     <div class="input-prepend">
                         <span class="add-on"><i class="icon-ok"></i></span>
-                        <input type="text" name="name" value="<?php echo $result->name; ?>" placeholder="name:" />
+                        <input type="text" name="name" value="<?php echo $result->name; ?>" placeholder="nome:" />
                     </div>
                     <div class="input-prepend">
                         <span class="add-on"><i class="icon-ok"></i></span>

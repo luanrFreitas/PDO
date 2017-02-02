@@ -9,7 +9,7 @@ include "config.php";
     <title>PBXIP</title>
     <meta name="description" content="PBXIP" />
     <meta name="robots" content="index, follow" />
-    <meta name="author" content="Andrew Esteves"/>
+    <meta name="author" content="Luan Freitas"/>
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" />
     <!--[if lt IE 9]>
