@@ -84,27 +84,34 @@ include "config.php";
                 $host = $_POST['host'];
                 $type = $_POST['type'];
                 $call = $_POST['call'];
-                $sql = "INSERT INTO pbxip_ramais (name,context,secret,host,type,`call-limit`) ";
-                $sql .= 'VALUES (:name,:context,:secret,:host,:type,:call)';
-                try {
-                    $create = $db->prepare($sql);
-                    $create->bindValue(':name', $name, PDO::PARAM_STR);
-                    $create->bindValue(':context', $context, PDO::PARAM_STR);
-                    $create->bindValue(':secret', $secret, PDO::PARAM_STR);
-                    $create->bindValue(':host', $host, PDO::PARAM_STR);
-                    $create->bindValue(':type', $type, PDO::PARAM_STR);
-                    $create->bindValue(':call', $call, PDO::PARAM_STR);
-                    if ($create->execute()) {
-                        echo "<div class='alert alert-success'>
+                if (empty($name) || empty($context) || empty($select) || empty($host) || empty($type) || empty($call)){
+                    echo "<div class='alert alert-error'>
+						<button type='button' class='close' data-dismiss='alert'>&times;</button>
+						<strong>Todos os campos devem ser preenchidos!</strong>
+						</div>";
+                }else {
+                    $sql = "INSERT INTO pbxip_ramais (name,context,secret,host,type,`call-limit`) ";
+                    $sql .= 'VALUES (:name,:context,:secret,:host,:type,:call)';
+                    try {
+                        $create = $db->prepare($sql);
+                        $create->bindValue(':name', $name, PDO::PARAM_STR);
+                        $create->bindValue(':context', $context, PDO::PARAM_STR);
+                        $create->bindValue(':secret', $secret, PDO::PARAM_STR);
+                        $create->bindValue(':host', $host, PDO::PARAM_STR);
+                        $create->bindValue(':type', $type, PDO::PARAM_STR);
+                        $create->bindValue(':call', $call, PDO::PARAM_STR);
+                        if ($create->execute()) {
+                            echo "<div class='alert alert-success'>
 						<button type='button' class='close' data-dismiss='alert'>&times;</button>
 						<strong>Inserido com sucesso!</strong>
 						</div>";
-                    }
-                } catch (PDOException $e) {
-                    echo "<div class='alert alert-error'>
+                        }
+                    } catch (PDOException $e) {
+                        echo "<div class='alert alert-error'>
 						<button type='button' class='close' data-dismiss='alert'>&times;</button>
 						<strong>Erro ao inserir dados!</strong>" . $e->getMessage() . "
 						</div>";
+                    }
                 }
             }
 

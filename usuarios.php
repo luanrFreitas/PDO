@@ -99,6 +99,12 @@ include "config.php";
             $ativo = $_POST['ativo'];
             $email = $_POST['email'];
             $perfil = $_POST['perfil'];
+            if(empty($nome) || empty($login) || empty($senha) || empty($ativo) || empty($email) || $perfil){
+                echo "<div class='alert alert-error'>
+						<button type='button' class='close' data-dismiss='alert'>&times;</button>
+						<strong>Todos os campos devem ser preenchidos!</strong>
+						</div>";
+            }else {
             $sql  = 'INSERT INTO webpbxip_usuario (nome,login,senha,ativo,email,id_perfil) ';
             $sql .= 'VALUES (:nome,:login,:senha,:ativo,:email,:perfil)';
             try {
@@ -120,6 +126,7 @@ include "config.php";
 						<button type='button' class='close' data-dismiss='alert'>&times;</button>
 						<strong>Erro ao inserir dados!</strong>" . $e->getMessage() . "
 						</div>";
+            }
             }
         }
         # UPDATE
