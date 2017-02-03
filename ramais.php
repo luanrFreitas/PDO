@@ -29,6 +29,7 @@ include "config.php";
                         <li><a href="index.php">Página inicial</a></li>
                         <li class="active"><a href="ramais.php">Ramais</a></li>
                         <li><a href="usuarios.php">Usuarios</a></li>
+                        <li><a href="contextos.php">Contextos</a></li>
                         <li><a href="/astcdr">Relatórios</a></li>
                         <li><a href="">Sair</a></li>
                     </ul>

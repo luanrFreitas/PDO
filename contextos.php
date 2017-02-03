@@ -26,10 +26,10 @@ include "config.php";
             <div class="navbar-inner">
                 <div class="container">
                     <ul class="nav">
-                        <li class="active"><a href="index.php">Página inicial</a></li>
+                        <li><a href="index.php">Página inicial</a></li>
                         <li><a href="ramais.php">Ramais</a></li>
                         <li><a href="usuarios.php">Usuarios</a></li>
-                        <li><a href="contextos.php">Contextos</a></li>
+                        <li  class="active"><a href="contextos.php">Contextos</a></li>
                         <li><a href="/astcdr">Relatórios</a></li>
                         <li><a href="">Sair</a></li>
                     </ul>

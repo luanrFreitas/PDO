@@ -29,6 +29,7 @@ include "config.php";
                         <li><a href="index.php">Página inicial</a></li>
                         <li><a href="ramais.php">Ramais</a></li>
                         <li class="active"><a href="usuarios.php">Usuarios</a></li>
+                        <li><a href="contextos.php">Contextos</a></li>
                         <li><a href="/astcdr">Relatórios</a></li>
                         <li><a href="">Sair</a></li>
                     </ul>
@@ -99,7 +100,7 @@ include "config.php";
             $ativo = $_POST['ativo'];
             $email = $_POST['email'];
             $perfil = $_POST['perfil'];
-            if(empty($nome) || empty($login) || empty($senha) || empty($ativo) || empty($email) || $perfil){
+            if(empty($nome) || empty($login) || empty($senha) || empty($ativo)){
                 echo "<div class='alert alert-error'>
 						<button type='button' class='close' data-dismiss='alert'>&times;</button>
 						<strong>Todos os campos devem ser preenchidos!</strong>
@@ -131,7 +132,7 @@ include "config.php";
         }
         # UPDATE
         if(isset($_POST['atualizar'])){
-            $id_usuario = (int)$_GET['id_usuario'];
+            $id_usuario = (int)$_POST['id_usuario'];
             $nome = $_POST['nome'];
             $login = $_POST['login'];
             $senha = $_POST['senha'];
@@ -156,8 +157,9 @@ include "config.php";
             }
         }
         # DELETE
-        if(isset($_GET['action']) && $_GET['action'] == 'delete'){
-            $id_usuario = (int)$_GET['id_usuario'];
+        if(isset($_POST['action']) && $_POST['action'] == 'delete'){
+            $id_usuario = (int)$_POST['id_usuario'];
+            echo "ID=". $id_usuario;
             $sqlDelete = 'DELETE FROM webpbxip_usuario WHERE id_usuario = :id_usuario';
             try {
                 $delete = $db->prepare($sqlDelete);
@@ -182,8 +184,8 @@ include "config.php";
 
         <section class="jumbotron">
             <?php
-            if(isset($_GET['action']) && $_GET['action'] == 'update'){
-                $id_usuario = (int)$_GET['id_usuario'];
+            if(isset($_POST['action']) && $_POST['action'] == 'update'){
+                $id_usuario = (int)$_POST['id_usuario'];
                 $sqlSelect = 'SELECT `id_usuario`, `nome`, `login`, `senha`, `ativo`, `email`, `id_perfil` FROM webpbxip_usuario WHERE id_usuario = :id_usuario';
                 try {
                     $select = $db->prepare($sqlSelect);
@@ -270,8 +272,16 @@ include "config.php";
                         <td><?php echo $rs->id_perfil; ?></td>
 
                         <td>
-                            <a href="usuarios.php?action=update&id_usuario=<?php echo $rs->id_usuario; ?>" class="btn"><i class="icon-pencil"></i></a>
-                            <a href="usuarios.php?action=delete&id_usuario=<?php echo $rs->id_usuario; ?>" class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></a>
+                            <form action="usuarios.php" method="post">
+                                <input type="hidden" name="action" value="update"/>
+                                <input type="hidden" name="id_usuario" value=<?php echo $rs->id_usuario; ?> />
+                                <button class="btn"><i class="icon-pencil"></i></button>
+                            </form>
+                            <form action="usuarios.php" method="post">
+                                <input type="hidden" name="action" value="delete"/>
+                                <input type="hidden" name="id_usuario" value=<?php echo $rs->id_usuario; ?> />
+                                <button class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></button>
+                            </form>
                         </td>
                     </tr>
                 <?php }	?>
