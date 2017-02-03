@@ -41,31 +41,37 @@ include "config.php";
             ?>
         <form method="post" action="">
             <div class="input-prepend">
+                <label for="login">Ramal:</label>
                 <span class="add-on"><i class="icon-ok"></i></span>
                 <input type="text" name="name" placeholder="Ramal:" />
             </div>
             <div class="input-prepend">
+                <label for="login">Contexto:</label>
                 <span class="add-on"><i class="icon-ok"></i></span>
-                <input type="text" name="context" placeholder="context:" />
+                <input type="text" name="context" placeholder="Contexto:" />
             </div>
             <div class="input-prepend">
+                <label for="login">Senha:</label>
                 <span class="add-on"><i class="icon-ok"></i></span>
-                <input type="text" name="secret" placeholder="secret:" />
+                <input type="text" name="secret" placeholder="Senha:" />
             </div>
             <div class="input-prepend">
+                <label for="login">Host:</label>
                 <span class="add-on"><i class="icon-ok"></i></span>
-                <input type="text" name="host" placeholder="host:" />
+                <input type="text" name="host" placeholder="Host:" />
             </div>
             <div class="input-prepend">
+                <label for="login">Tipo:</label>
                 <span class="add-on"><i class="icon-ok"></i></span>
-                <input type="text" name="type" placeholder="type:" />
+                <input type="text" name="type" placeholder="Tipo:" />
             </div>
             <div class="input-prepend">
+                <label for="login">Ligações Simultâneas:</label>
                 <span class="add-on"><i class="icon-ok"></i></span>
-                <input type="text" name="call" placeholder="call-limit:" />
+                <input type="text" name="call" placeholder="Ligações Simultâneas:" />
             </div>
             <br />
-            <input type="submit" name="enviar" class="btn btn-primary" value="Cadastrar ramal">
+            <input type="submit" name="enviar" class="btn btn-primary" value="Salvar">
         </form>
 
             <?php } ?>
@@ -203,14 +209,16 @@ include "config.php";
                     <input type="submit" name="atualizar" class="btn btn-primary" value="Atualizar dados">
                 </form>
 
-            <?php }else{ ?>
+            <?php }else{
+            if(!isset($_POST['novo'])){
+                ?>
 
                 <form method="post" action="">
                     <br />
                     <input type="submit" name="novo" class="btn btn-primary" value="Novo ramal">
                 </form>
 
-            <?php } ?>
+            <?php } }?>
 
             <table class="table table-hover">
 

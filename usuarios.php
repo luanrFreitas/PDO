@@ -41,27 +41,52 @@ include "config.php";
             ?>
             <form method="post" action="">
                 <div class="input-prepend">
+                    <label for="nome">Nome:</label>
                     <span class="add-on"><i class="icon-user"></i></span>
-                    <input type="text" name="nome" placeholder="Nome:" />
+                    <input type="text" name="nome" placeholder="Nome"/>
                 </div>
                 <div class="input-prepend">
+                    <label for="login">Login:</label>
                     <span class="add-on"><i class="icon-tags"></i></span>
-                    <input type="text" name="login" placeholder="Login:" />
+                    <input type="text" name="login" placeholder="Login" />
                 </div>
                 <div class="input-prepend">
+                    <label for="senha">Senha:</label>
                     <span class="add-on"><i class="icon-asterisk"></i></span>
-                    <input type="text" name="senha" placeholder="Senha:" />
+                    <input type="password" name="senha" placeholder="Senha" />
                 </div>
-                <div class="input-prepend">
-                    <span class="add-on"><i class="icon-ok"></i></span>
-                    <input type="text" name="ativo" placeholder="Ativo:" />
-                </div>
-                <div class="input-prepend">
+<!--                <div class="input-prepend">-->
+<!--                    <label for="ativo">Ativo:</label>-->
+<!--                    <span class="add-on"><i class="icon-ok"></i></span>-->
+<!--                    <input type="text" name="ativo" placeholder="Ativo" />-->
+<!--                </div>-->
+                <div class="input-prepend" >
+                    <label for="email">E-mail:</label>
                     <span class="add-on"><i class="icon-envelope"></i></span>
-                    <input type="text" name="email" placeholder="E-mail:" />
+                    <input type="text" name="email" placeholder="E-mail" />
+                </div> </br>
+                <br />
+                <div class="form-group">
+                    <label for="sel1">Ativo:</label>
+                    <select class="form-control" id="sel1" name="ativo">
+                        <option>Sim</option>
+                        <option>Não</option>
+                    </select>
+                </div>
+<!--                <div class="input-prepend">-->
+<!--                    <label for="perfil">Perfil:</label>-->
+<!--                    <span class="add-on"><i class="icon-tags"></i></span>-->
+<!--                    <input type="text" name="perfil" placeholder="Perfil" />-->
+<!--                </div>-->
+                <div class="form-group" >
+                    <label for="perfil">Perfil:</label>
+                    <select class="form-control" id="perfil" name="perfil">
+                        <option>Usuário</option>
+                        <option>Administrador</option>
+                    </select>
                 </div>
                 <br />
-                <input type="submit" name="enviar" class="btn btn-primary" value="Cadastrar Usuário">
+                <input type="submit" name="enviar" class="btn btn-primary" value="Salvar">
             </form>
 
         <?php } ?>
@@ -73,8 +98,9 @@ include "config.php";
             $senha = $_POST['senha'];
             $ativo = $_POST['ativo'];
             $email = $_POST['email'];
-            $sql  = 'INSERT INTO webpbxip_usuario (nome,login,senha,ativo,email) ';
-            $sql .= 'VALUES (:nome,:login,:senha,:ativo,:email)';
+            $perfil = $_POST['perfil'];
+            $sql  = 'INSERT INTO webpbxip_usuario (nome,login,senha,ativo,email,id_perfil) ';
+            $sql .= 'VALUES (:nome,:login,:senha,:ativo,:email,:perfil)';
             try {
                 $create = $db->prepare($sql);
                 $create->bindValue(':nome', $nome, PDO::PARAM_STR);
@@ -82,6 +108,7 @@ include "config.php";
                 $create->bindValue(':senha', $senha, PDO::PARAM_STR);
                 $create->bindValue(':ativo', $ativo, PDO::PARAM_STR);
                 $create->bindValue(':email', $email, PDO::PARAM_STR);
+                $create->bindValue(':perfil', $perfil, PDO::PARAM_STR);
                 if($create->execute()){
                     echo "<div class='alert alert-success'>
 						<button type='button' class='close' data-dismiss='alert'>&times;</button>
@@ -192,23 +219,23 @@ include "config.php";
                     <input type="submit" name="atualizar" class="btn btn-primary" value="Atualizar dados">
                 </form>
 
-            <?php }else{ ?>
+            <?php }else{
+                if(!isset($_POST['novo'])){
+                    ?>
 
                 <form method="post" action="">
                     <br />
                     <input type="submit" name="novo" class="btn btn-primary" value="Novo Usuário">
                 </form>
 
-            <?php } ?>
+            <?php } }?>
 
             <table class="table table-hover">
 
                 <thead>
                 <tr>
-                    <th>#</th>
                     <th>Nome:</th>
                     <th>Login:</th>
-                    <th>Senha:</th>
                     <th>Ativo:</th>
                     <th>E-mail:</th>
                     <th>Perfil:</th>
@@ -229,10 +256,8 @@ include "config.php";
                 while( $rs = $read->fetch(PDO::FETCH_OBJ) ){
                     ?>
                     <tr>
-                        <td><?php echo $rs->id_usuario; ?></td>
                         <td><?php echo $rs->nome; ?></td>
                         <td><?php echo $rs->login; ?></td>
-                        <td><?php echo $rs->senha; ?></td>
                         <td><?php echo $rs->ativo; ?></td>
                         <td><?php echo $rs->email; ?></td>
                         <td><?php echo $rs->id_perfil; ?></td>
