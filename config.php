@@ -1,5 +1,5 @@
 <?php
-$conn = 'mysql:host=10.1.2.63;dbname=pbxip';
+$conn = 'mysql:host=localhost;dbname=pbxip';
 try {
     $db = new PDO($conn, 'softium', 'softium@123');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

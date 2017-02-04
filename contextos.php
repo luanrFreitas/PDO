@@ -11,7 +11,7 @@ include "config.php";
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Luan Freitas"/>
     <link rel="stylesheet" href="css/bootstrap.css" />
-    <link rel="stylesheet" />
+    <link rel="stylesheet" href="css/luan.css" />
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
