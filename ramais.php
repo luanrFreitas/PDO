@@ -85,7 +85,7 @@ include "config.php";
                 $host = $_POST['host'];
                 $type = $_POST['type'];
                 $call = $_POST['call'];
-                if (empty($name) || empty($context) || empty($select) || empty($host) || empty($type) || empty($call)){
+                if (empty($name) || empty($context) || empty($secret) || empty($host) || empty($type) || empty($call)){
                     echo "<div class='alert alert-error'>
 						<button type='button' class='close' data-dismiss='alert'>&times;</button>
 						<strong>Todos os campos devem ser preenchidos!</strong>
