@@ -1,0 +1,17 @@
+{
+    "name": "luanfreitas/pbxip",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Luan Freitas",
+            "email": "luan.lrf@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+"autoload":{
+"psr-4":{
+"pbxip\\":"Src"
+}
+}
+}
