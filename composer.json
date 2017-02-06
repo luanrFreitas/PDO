@@ -1,6 +1,7 @@
 {
     "name": "luanfreitas/pbxip",
     "type": "project",
+    "license": "MIT",
     "authors": [
         {
             "name": "Luan Freitas",
