@@ -272,12 +272,12 @@ include "config.php";
                         <td><?php echo $rs->id_perfil; ?></td>
 
                         <td>
-                            <form action="usuarios.php" method="post">
+                            <form class="luan_form" action="usuarios.php" method="post">
                                 <input type="hidden" name="action" value="update"/>
                                 <input type="hidden" name="id_usuario" value=<?php echo $rs->id_usuario; ?> />
                                 <button class="btn"><i class="icon-pencil"></i></button>
                             </form>
-                            <form action="usuarios.php" method="post">
+                            <form class="luan_form" action="usuarios.php" method="post">
                                 <input type="hidden" name="action" value="delete"/>
                                 <input type="hidden" name="id_usuario" value=<?php echo $rs->id_usuario; ?> />
                                 <button class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></button>
