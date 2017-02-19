@@ -1,7 +1,10 @@
+<!DOCTYPE HTML>
+
 <?php
 include "config.php";
+include "navbar.php";
 ?>
-<!DOCTYPE HTML>
+
 <html land="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -21,21 +24,9 @@ include "config.php";
 <div class="container">
 
     <header class="masthead">
-        <h1 class="muted">PBX IP</h1>
-        <nav class="navbar">
-            <div class="navbar-inner">
-                <div class="container">
-                    <ul class="nav">
-                        <li><a href="index.php">Página inicial</a></li>
-                        <li class="active"><a href="ramais.php">Ramais</a></li>
-                        <li><a href="usuarios.php">Usuarios</a></li>
-                        <li><a href="contextos.php">Contextos</a></li>
-                        <li><a href="/astcdr">Relatórios</a></li>
-                        <li><a href="">Sair</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+
+
+
         <?php
         # INSERT
         if(isset($_POST['novo'])){
