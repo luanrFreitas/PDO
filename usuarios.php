@@ -65,10 +65,11 @@ include "config.php";
                     <label for="email">E-mail:</label>
                     <span class="add-on"><i class="icon-envelope"></i></span>
                     <input type="text" name="email" placeholder="E-mail" />
-                </div> </br>
-                <br />
-                <div class="form-group">
+                </div>
+
+                <div class="input-prepend">
                     <label for="sel1">Ativo:</label>
+                    <span class="add-on"><i class="icon-asterisk"></i></span>
                     <select class="form-control" id="sel1" name="ativo">
                         <option>Sim</option>
                         <option>Não</option>
@@ -79,13 +80,14 @@ include "config.php";
 <!--                    <span class="add-on"><i class="icon-tags"></i></span>-->
 <!--                    <input type="text" name="perfil" placeholder="Perfil" />-->
 <!--                </div>-->
-                <div class="form-group" >
+                <div class="input-prepend" >
                     <label for="perfil">Perfil:</label>
+                    <span class="add-on"><i class="icon-asterisk"></i></span>
                     <select class="form-control" id="perfil" name="perfil">
                         <option>Usuário</option>
                         <option>Administrador</option>
                     </select>
-                </div>
+                </div> </br>
                 <br />
                 <input type="submit" name="enviar" class="btn btn-primary" value="Salvar">
             </form>
@@ -159,7 +161,6 @@ include "config.php";
         # DELETE
         if(isset($_POST['action']) && $_POST['action'] == 'delete'){
             $id_usuario = (int)$_POST['id_usuario'];
-            echo "ID=". $id_usuario;
             $sqlDelete = 'DELETE FROM webpbxip_usuario WHERE id_usuario = :id_usuario';
             try {
                 $delete = $db->prepare($sqlDelete);

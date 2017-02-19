@@ -143,8 +143,8 @@ include "config.php";
             }
         }
         # DELETE
-        if(isset($_GET['action']) && $_GET['action'] == 'delete'){
-            $id = (int)$_GET['id'];
+        if(isset($_POST['action']) && $_POST['action'] == 'delete'){
+            $id = (int)$_POST['id'];
             $sqlDelete = 'DELETE FROM pbxip_ramais WHERE id = :id';
             try {
                 $delete = $db->prepare($sqlDelete);
@@ -169,8 +169,8 @@ include "config.php";
 
         <section class="jumbotron">
             <?php
-            if(isset($_GET['action']) && $_GET['action'] == 'update'){
-                $id = (int)$_GET['id'];
+            if(isset($_POST['action']) && $_POST['action'] == 'update'){
+                $id = (int)$_POST['id'];
                 $sqlSelect = 'SELECT id,`name`,`context`,`secret`,`host`,`type`,`call-limit` as calllimit FROM pbxip_ramais WHERE id = :id';
                 try {
                     $select = $db->prepare($sqlSelect);
@@ -239,6 +239,7 @@ include "config.php";
                     <th>Host:</th>
                     <th>Tipo:</th>
                     <th>Ligaçoes Simultâneas:</th>
+                    <th>Ações</th>
                 </tr>
                 </thead>
 
@@ -265,9 +266,18 @@ include "config.php";
                         <td><?php echo $rs->calllimit; ?></td>
 
                         <td>
-                            <a href="ramais.php?action=update&id=<?php echo $rs->id; ?>" class="btn"><i class="icon-pencil"></i></a>
-                            <a href="ramais.php?action=delete&id=<?php echo $rs->id; ?>" class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></a>
+                            <form class="luan_form" action="ramais.php" method="post">
+                                <input type="hidden" name="action" value="update"/>
+                                <input type="hidden" name="id" value=<?php echo $rs->id; ?> />
+                                <button class="btn"><i class="icon-pencil"></i></button>
+                            </form>
+                            <form class="luan_form" action="ramais.php" method="post">
+                                <input type="hidden" name="action" value="delete"/>
+                                <input type="hidden" name="id" value=<?php echo $rs->id; ?> />
+                                <button class="btn" onclick="return confirm('Deseja deletar?');"><i class="icon-remove"></i></button>
+                            </form>
                         </td>
+
                     </tr>
                 <?php }	?>
                 </tbody>
